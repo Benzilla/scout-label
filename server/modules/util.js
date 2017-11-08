@@ -3,6 +3,8 @@ var exports = module.exports = {};
 var logs_enabled = true;
 var fs = require('fs');
 
+var data_folder_path = 'C:/dev/sites/Scout/Scout-Bot/data/';
+
 exports.save = function(obj,location,callback){
 	obj = JSON.stringify(obj);
 	fs.writeFile(location, obj, 'utf8', function(err) {
@@ -27,17 +29,17 @@ exports.load_json = function(path,callback){
 
 exports.get_data = function(location,index,callback){
 	var fp = location_to_fp(location);
-	exports.load_json('C:/dev/sites/Scout/Scout-Bot/data/'+fp,function(data){
+	exports.load_json(data_folder_path+fp,function(data){
 		callback({data:data[index],num_data:data.length});
 	});	
 }
 
 exports.classify = function(location,index,linked,callback){
 	var fp = location_to_fp(location);
-	exports.load_json('C:/dev/sites/Scout/Scout-Bot/data/'+fp,function(data){
+	exports.load_json(data_folder_path+fp,function(data){
 		data[index].linked = JSON.parse(linked);
 		console.log(index,data[index].name);
-		exports.save(data,'C:/dev/sites/Scout/Scout-Bot/data/'+fp,function(){
+		exports.save(data,data_folder_path+fp,function(){
 			callback();
 		})
 	});	
